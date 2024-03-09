@@ -3,6 +3,7 @@ import SalesChart from "../components/dashboard/SalesChart";
 import Feeds from "../components/dashboard/Feeds";
 import ProjectTables from "../components/dashboard/ProjectTable";
 import TopCards from "../components/dashboard/TopCards";
+import PressureChart from "../components/dashboard/PressureChart";
 
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -180,14 +181,14 @@ const Starter = () => {
       <tbody>
         <tr>
           <td>Load Status</td>
-          <td style={{ color: binaryArray[0] === '1' ? 'red' : 'green', fontWeight:"bold" }}>
-            {binaryArray[0] === '1' ? 'Unload' : 'Load'}
+          <td style={{ color: binaryArray[0] === '1' ? 'green' : 'red', fontWeight:"bold" }}>
+            {binaryArray[0] === '1' ? 'Load' : 'Unload'}
           </td>
         </tr>
         <tr>
           <td>Run Status</td>
-          <td style={{ color: binaryArray[1] === '1' ? 'red' : 'green' , fontWeight:"bold" }}>
-            {binaryArray[1] === '1' ? 'Stop' : 'Run'}
+          <td style={{ color: binaryArray[1] === '1' ? 'green' : 'red' , fontWeight:"bold" }}>
+            {binaryArray[1] === '1' ? 'Run' : 'Stop'}
           </td>
         </tr>
         <tr>
@@ -334,6 +335,11 @@ const Starter = () => {
         </Col>
         <Col sm="6" lg="6" xl="5" xxl="4">
           <Feeds />
+        </Col>
+      </Row>
+      <Row>
+        <Col sm="12" lg="12" xl="12" xxl="12">
+          <PressureChart />
         </Col>
       </Row>
    
