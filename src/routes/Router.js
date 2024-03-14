@@ -7,6 +7,8 @@ import Badges from "../views/ui/Badges";
 // import Login from "../components/login";
 // import RegistrationPage from "../components/RegistrationPage";
 // import AuthLayout from "../components/AuthLayout";
+import Report from "../views/Report";
+
 
 const ThemeRoutes = [
   {
@@ -17,7 +19,7 @@ const ThemeRoutes = [
       { path: "/", element: <Navigate to="/starter" /> },
       { path: "/starter", exact: true, element: <Starter /> },
       { path: "/about", exact: true, element: <About /> },
-      { path: "/badges", exact: true, element: <Badges /> },
+      { path: "/Report", exact: true, element: <Report /> },
       // { path: "/login", exact: true, element: <Login /> },
       // { path: "/RegistrationPage", exact: true, element: <RegistrationPage /> },
     ],
