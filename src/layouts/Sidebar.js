@@ -9,11 +9,11 @@ const navigation = [
     href: "/starter",
     icon: "bi bi-speedometer2",
   },
-  // {
-  //   title: "Contact for Service",
-  //   href: "/badges",
-  //   icon: "bi bi-envelope",
-  // },
+  {
+    title: "Report",
+    href: "/report",
+    icon: "bi bi-journal-text",
+  },
   // 
   // {
   //   title: "Cards",
