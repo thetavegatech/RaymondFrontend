@@ -53,7 +53,7 @@ const SalesChart = () => {
 
         setSeries([
           {
-            name: 'CurrentVFD',
+            name: 'Host A Phase Current',
             data: reversedValues
           }
         ]);

@@ -54,7 +54,7 @@ const PressureChart = () => {
 
         setSeries([
           {
-            name: 'CurrentVFD',
+            name: 'Air Feed Pressure',
             data: reversedValues
           }
         ]);
