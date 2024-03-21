@@ -2,10 +2,8 @@ import { Card, CardBody } from "reactstrap";
 
 const TopCards = (props) => {
   return (
-    <Card    >
-      {/* <small>Remaining</small> */}
-      
-      <CardBody >
+    <Card>
+      <CardBody>
         <div className="d-flex">
           <div className={`circle-box lg-box d-inline-block ${props.bg}`}>
             <i className={props.icon}></i>

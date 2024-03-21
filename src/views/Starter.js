@@ -85,7 +85,7 @@ console.log(datahighlow)
     <div>
       {/***Top Cards***/}
       <Row>
-        {/* <Col sm="6" lg="3">
+        <Col sm="6" lg="3">
           <TopCards
             bg="bg-light-danger text-danger"
             title="Refunds"
@@ -93,7 +93,7 @@ console.log(datahighlow)
             earning={mqttData.AirExstTemp - 50 + "°"}
             icon="bi bi-thermometer-high"
           />
-        </Col> */}
+        </Col>
         <Col sm="6" lg="3">
           <TopCards
             bg="bg-light-warning text-warning"
@@ -112,7 +112,7 @@ console.log(datahighlow)
             icon="bi bi-hourglass"
           />
         </Col>
-        <Col sm="6" lg="3">
+        {/* <Col sm="6" lg="3">
           <TopCards
             bg="bg-light-danger text-danger"
             title="Sales"
@@ -120,7 +120,7 @@ console.log(datahighlow)
             earning={mqttData.HostAPhCur / 10 + "A"}
             icon="bi bi-lightning"
           />
-        </Col>
+        </Col> */}
         <Col sm="6" lg="3">
           <TopCards
             bg="bg-light-warning text-warning"

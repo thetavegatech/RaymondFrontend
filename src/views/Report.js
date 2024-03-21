@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table, Button, Input } from 'reactstrap';
+import { Table, Button, Input, Spinner } from 'reactstrap'; // Import Spinner component for loading indication
 
 const Report = () => {
   const [data, setData] = useState([]);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [loading, setLoading] = useState(false); // State to control loading indication
 
   const fetchData = async () => {
+    setLoading(true); // Set loading to true when fetching data
     try {
-      const response = await axios.get('https://raymondbackend.onrender.com/api/getdataall'); // Replace with your actual API endpoint
+      const response = await axios.get('https://raymondbackend.onrender.com/api/getdataall');
       setData(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
+    } finally {
+      setLoading(false); // Set loading to false after data fetching is done
     }
   };
 
@@ -21,39 +25,52 @@ const Report = () => {
   }, []);
 
   const handleFilterClick = async () => {
+    setLoading(true); // Set loading to true when fetching filtered data
     try {
       const response = await axios.get(`https://raymondbackend.onrender.com/api/getdataall?startDate=${startDate}&endDate=${endDate}`);
       setData(response.data);
     } catch (error) {
       console.error('Error fetching filtered data:', error);
+    } finally {
+      setLoading(false); // Set loading to false after filtered data fetching is done
     }
   };
 
   return (
     <div>
       <h1>Report</h1>
-      <div className='row' style={{marginBottom : "2rem"}}>
+      <div className='row' style={{ marginBottom: '2rem' }}>
         <div className='col-4'>
-        <Input
-          type="date"
-          value={startDate}
-          onChange={(e) => setStartDate(e.target.value)}
-        />
+          <label>Start Date</label>
+          <Input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+          />
         </div>
         <div className='col-4'>
-        <Input
-          type="date"
-          value={endDate}
-          onChange={(e) => setEndDate(e.target.value)}
-        />
+        <label>Start Date</label>
+          <Input
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+          />
         </div>
-        <div className='col-4'>
-        <Button color="primary" onClick={handleFilterClick}>
-          Filter
-        </Button>
+        <div className='col-4' style={{marginTop: "1.5rem"}}>
+          <Button color="primary" onClick={handleFilterClick}>
+            Filter
+          </Button>
         </div>
-        
       </div>
+
+      {/* Show loading indication if loading state is true */}
+      {loading ? (
+        <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
+          <Spinner color="primary" />
+          <p>Please wait, fetching data...</p>
+        </div>
+      ) : null}
+
       <Table bordered responsive>
         <thead>
           <tr>
