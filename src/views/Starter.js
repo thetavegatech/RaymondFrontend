@@ -59,6 +59,7 @@ const Starter = () => {
     const fetchData = async () => {
       try {
         const response = await fetch('https://raymondbackend.onrender.com/api/hostcurhighlow'); // Assuming your API is served from the same origin
+        // const response = await fetch('http://192.168.29.147:5002/api/hostcurhighlow'); // Assuming your API is served from the same origin
         const jsonData = await response.json();
         // console.log(jsonData)
         setDatahighlow(jsonData);
@@ -77,15 +78,12 @@ const Starter = () => {
     return () => clearInterval(interval);
   }, []); // Run once when component mounts
 
-console.log(datahighlow)
-
-
 
   return (
     <div>
       {/***Top Cards***/}
       <Row>
-        <Col sm="6" lg="3">
+        {/* <Col sm="6" lg="3">
           <TopCards
             bg="bg-light-danger text-danger"
             title="Refunds"
@@ -93,6 +91,84 @@ console.log(datahighlow)
             earning={mqttData.AirExstTemp - 50 + "°"}
             icon="bi bi-thermometer-high"
           />
+        </Col> */}
+          <Col sm="6" lg="4">
+          <Card>
+            <CardBody>
+              <div className="d-flex">
+                <div className="circle-box lg-box d-inline-block" style={{background:"#D4E6F1"}}>
+                  <i className="bi bi-wallet" style={{color : "#2E86C1"}}></i>
+                </div>
+                <div className="ms-3" style={{marginBottom : "1rem" }}>
+                  <h3 className='mb-0 font-weight-bold' style={{boxFlexGroup :"black"}} >{mqttData.AirFeedPre / 10 +  " Bar"}</h3>
+                  <small className="font-weight-bold " style={{ fontWeight: "bold", color: "#120A8F"}}>
+                    Air Feed Pressure
+                  </small>
+                </div>
+              </div>
+              <Table bordered>
+                <thead>
+                  <tr>
+                    <th style={{color : "#FF0000"}}>High {(datahighlow.airmax/10).toFixed(1)} </th>
+                    <th style={{color : "#0a2351"}}>Average {(datahighlow.airavg/10).toFixed(1)}</th>
+                    <th style={{color : "#0FB814"}}>Low  {(datahighlow.airmin/10).toFixed(1)}</th>
+                  </tr>
+                </thead>
+              </Table>     
+            </CardBody>
+          </Card>
+        </Col>
+        <Col sm="6" lg="4">
+          <Card>
+            <CardBody>
+              <div className="d-flex">
+                <div className="circle-box lg-box d-inline-block" style={{background:"#FCF3CF"}}>
+                  <i className="bi bi-thermometer" style={{color : "#D4AC0D"}}></i>
+                </div>
+                <div className="ms-3" style={{marginBottom : "1rem" }}>
+                  <h3 className='mb-0 font-weight-bold' style={{boxFlexGroup :"black"}} >{mqttData.AirExstTemp - 50 + "°"}</h3>
+                  <small className="font-weight-bold " style={{ fontWeight: "bold", color: "#120A8F"}}>
+                  Air Exst  Temperature
+                  </small>
+                </div>
+              </div>
+              <Table bordered>
+                <thead>
+                  <tr>
+                    <th  style={{color : "#FF0000"}}>High {datahighlow.airtmpmax - 50} </th>
+                    <th  style={{color : "#0a2351"}}>Average {datahighlow.airtmpavg - 50} </th>
+                    <th  style={{color : "#0FB814"}}>Low {datahighlow.airtmpmin - 50}</th>
+                  </tr>
+                </thead>
+              </Table>     
+            </CardBody>
+          </Card>
+        </Col>
+        <Col sm="6" lg="4">
+          <Card>
+            <CardBody>
+              <div className="d-flex">
+                <div className="circle-box lg-box d-inline-block" style={{background:"#F6DDCC"}}>
+                  <i className="bi bi-lightning" style={{color : "#E67E22"}}></i>
+                </div>
+                <div className="ms-3" style={{marginBottom : "1rem" }}>
+                  <h3 className='mb-0 font-weight-bold' style={{boxFlexGroup :"black"}} >{mqttData.HostAPhCur / 10 } A</h3>
+                  <small className="font-weight-bold " style={{ fontWeight: "bold", color: "#120A8F"}}>
+                  Host A Phase Current
+                  </small>
+                </div>
+              </div>
+              <Table bordered>
+                <thead>
+                  <tr>
+                    <th  style={{color : "#FF0000"}}>High {(datahighlow.curhostmax/10).toFixed(1)} </th>
+                    <th  style={{color : "#0a2351"}}>Average {(datahighlow.curhostavg/10).toFixed(1)} </th>
+                    <th  style={{color : "#0FB814"}}>Low {(datahighlow.curhostmin/10).toFixed(1)}</th>
+                  </tr>
+                </thead>
+              </Table>     
+            </CardBody>
+          </Card>
         </Col>
         <Col sm="6" lg="3">
           <TopCards
@@ -165,72 +241,6 @@ console.log(datahighlow)
             earning={mqttData.LubeGreaseT + " Hr"}
             icon="bi bi-hourglass"
           />
-        </Col>
-        <Col sm="6" lg="4">
-          {/* <TopCards
-            bg="bg-light-success text-success"
-            title="Profit"
-            subtitle="Air Feed Pressure"
-            earning={mqttData.AirFeedPre / 10 +  " Bar"}
-            icon="bi bi-wallet"
-          /> */}
-          <Card>
-            <CardBody>
-              <div className="d-flex">
-                <div className="circle-box lg-box d-inline-block" style={{background:"#A2D9CE"}}>
-                  <i className="bi bi-wallet" style={{color : "#2E86C1"}}></i>
-                </div>
-                <div className="ms-3" style={{marginBottom : "1rem" }}>
-                  <h3 className='mb-0 font-weight-bold' style={{boxFlexGroup :"black"}} >{mqttData.AirFeedPre / 10 +  " Bar"}</h3>
-                  <small className="font-weight-bold " style={{ fontWeight: "bold", color: "#120A8F"}}>
-                    Air Feed Pressure
-                  </small>
-                </div>
-              </div>
-              <Table bordered>
-                <thead>
-                  <tr>
-                    <th style={{color : "#FF0000"}}>High {datahighlow.airmax/10} </th>
-                    <th style={{color : "#0a2351"}}>Average {(datahighlow.airmax/10 + datahighlow.airmin/10)/2}</th>
-                    <th style={{color : "#0FB814"}}>Low  {datahighlow.airmin/10}</th>
-                  </tr>
-                </thead>
-              </Table>     
-            </CardBody>
-          </Card>
-        </Col>
-        <Col sm="6" lg="4">
-          {/* <TopCards
-            bg="bg-light-success text-success"
-            title="Profit"
-            subtitle="Air Feed Pressure"
-            earning={mqttData.AirFeedPre / 10 +  " Bar"}
-            icon="bi bi-wallet"
-          /> */}
-          <Card>
-            <CardBody>
-              <div className="d-flex">
-                <div className="circle-box lg-box d-inline-block" style={{background:"#F5CBA7"}}>
-                  <i className="bi bi-lightning" style={{color : "#E67E22"}}></i>
-                </div>
-                <div className="ms-3" style={{marginBottom : "1rem" }}>
-                  <h3 className='mb-0 font-weight-bold' style={{boxFlexGroup :"black"}} >{mqttData.HostAPhCur / 10 } A</h3>
-                  <small className="font-weight-bold " style={{ fontWeight: "bold", color: "#120A8F"}}>
-                  Host A Phase Current
-                  </small>
-                </div>
-              </div>
-              <Table bordered>
-                <thead>
-                  <tr>
-                    <th  style={{color : "#FF0000"}}>High {datahighlow.curhostmax/10} </th>
-                    <th  style={{color : "#0a2351"}}>Average {(datahighlow.curhostmax/10 + datahighlow.curhostmin/10)/2} </th>
-                    <th  style={{color : "#0FB814"}}>Low {datahighlow.curhostmin/10}</th>
-                  </tr>
-                </thead>
-              </Table>     
-            </CardBody>
-          </Card>
         </Col>
       </Row>
       {/***Sales & Feed***/}
