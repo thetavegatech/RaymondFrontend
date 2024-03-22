@@ -35,7 +35,7 @@ const SalesChart = () => {
 
   const [series, setSeries] = useState([
     {
-      name: 'CurrentVFD',
+      name: 'Host A Phase Current',
       data: [],
     }
   ]);
@@ -43,13 +43,32 @@ const SalesChart = () => {
   const fetchData = () => {
     axios.get("https://raymondbackend.onrender.com/api/hostaphcur")
       .then(response => {
-        const values = response.data;
-        
-        // Divide each value in the array by 10
-        const valuesDividedBy10 = values.map(value => value / 10);
+        const { values, dates } = response.data;
 
-        // Reverse the order of the array
-        const reversedValues = valuesDividedBy10.reverse();
+        // Divide all values by 10
+        const dividedValues = values.map(value => (value / 10).toFixed(1));
+
+        // Reverse the order of the arrays
+        const reversedValues = dividedValues.reverse();
+        const formattedDates = dates.reverse().map(dateString => {
+          const date = new Date(dateString);
+          return date.toLocaleString('en-US', {
+            day: '2-digit',
+            month: '2-digit',
+            year: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+          });
+        });
+
+        setOptions({
+          ...options,
+          xaxis: {
+            ...options.xaxis,
+            categories: formattedDates
+          }
+        });
 
         setSeries([
           {
@@ -76,7 +95,7 @@ const SalesChart = () => {
   return (
     <Card>
       <CardBody>
-        <CardTitle tag="h5">Host A Phase Current</CardTitle>
+        <CardTitle tag="h5">Host A Phase Current Run Chart : For Current Day</CardTitle>
         <Chart
           type="area"
           width="100%"

@@ -78,9 +78,9 @@ const Starter = () => {
     return () => clearInterval(interval);
   }, []); // Run once when component mounts
 
-
   return (
     <div>
+      {/* <h4>{Date.now()}</h4> */}
       {/***Top Cards***/}
       <Row>
         {/* <Col sm="6" lg="3">
@@ -126,17 +126,18 @@ const Starter = () => {
                   <i className="bi bi-thermometer" style={{color : "#D4AC0D"}}></i>
                 </div>
                 <div className="ms-3" style={{marginBottom : "1rem" }}>
-                  <h3 className='mb-0 font-weight-bold' style={{boxFlexGroup :"black"}} >{mqttData.AirExstTemp - 50 + "°"}</h3>
+                  <h3 className='mb-0 font-weight-bold' style={{boxFlexGroup :"black"}} >{mqttData.AirExstTemp - 50 + "°"} </h3>
                   <small className="font-weight-bold " style={{ fontWeight: "bold", color: "#120A8F"}}>
                   Air Exst  Temperature
                   </small>
                 </div>
               </div>
               <Table bordered>
+              
                 <thead>
                   <tr>
                     <th  style={{color : "#FF0000"}}>High {datahighlow.airtmpmax - 50} </th>
-                    <th  style={{color : "#0a2351"}}>Average {datahighlow.airtmpavg - 50} </th>
+                    <th  style={{color : "#0a2351"}}>Average {(datahighlow.airtmpavg - 50).toFixed(1)} </th>
                     <th  style={{color : "#0FB814"}}>Low {datahighlow.airtmpmin - 50}</th>
                   </tr>
                 </thead>
@@ -188,15 +189,6 @@ const Starter = () => {
             icon="bi bi-hourglass"
           />
         </Col>
-        {/* <Col sm="6" lg="3">
-          <TopCards
-            bg="bg-light-danger text-danger"
-            title="Sales"
-            subtitle="Host A phase Current "
-            earning={mqttData.HostAPhCur / 10 + "A"}
-            icon="bi bi-lightning"
-          />
-        </Col> */}
         <Col sm="6" lg="3">
           <TopCards
             bg="bg-light-warning text-warning"

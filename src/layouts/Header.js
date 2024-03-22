@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import {
   Navbar,
@@ -6,15 +6,10 @@ import {
   Nav,
   NavItem,
   NavbarBrand,
-  
-  DropdownToggle,
-  // DropdownMenu,
-  // DropdownItem,
-  Dropdown,
   Button,
 } from "reactstrap";
 // import { ReactComponent as LogoWhite } from "../assets/images/logos/xtremelogowhite.svg";
-import user1 from "../assets/images/users/user4.jpg";
+// import user1 from "../assets/images/users/user4.jpg";
 // import smalllogo from '../assets/images/logos/smalllogo.png'
 import smalllogo from '../assets/images/logos/logo.PNG'
 
@@ -29,6 +24,49 @@ const Header = () => {
   const showMobilemenu = () => {
     document.getElementById("sidebarArea").classList.toggle("showSidebar");
   };
+
+
+  const [mqttData, setMqttData] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("https://raymondbackend.onrender.com/api/mqttdata");
+        const data = await response.json();
+        setMqttData(data);
+      } catch (error) {
+        console.error("Error fetching MQTT data:", error);
+      }
+    };
+
+    const interval = setInterval(fetchData, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Function to format date and time from mqttData.dtm
+  const formatDateTime = (dtm) => {
+    if (!dtm) return '';
+  
+    const year = dtm.substring(0, 4);
+    const month = dtm.substring(4, 6);
+    const day = dtm.substring(6, 8);
+    const hour = dtm.substring(8, 10);
+    const minute = dtm.substring(10, 12);
+    const second = dtm.substring(12, 14);
+  
+    // Convert hour to a number
+    const hourNumber = parseInt(hour, 10);
+  
+    // Determine AM or PM based on the hour
+    const period = hourNumber >= 12 ? 'PM' : 'AM';
+  
+    // Convert hour to 12-hour format
+    const hour12 = hourNumber % 12 || 12;
+  
+    return `${hour12}:${minute}:${second} ${period} ${day}-${month}-${year}`;
+  };
+
   return (
     <Navbar color="white" dark expand="md">
       <div className="d-flex align-items-center">
@@ -73,6 +111,7 @@ const Header = () => {
        
         </Dropdown> */}
       </Collapse>
+      <h5 style={{marginTop : "10px"}}>{formatDateTime(mqttData.dtm)}</h5>
     </Navbar>
   );
 };

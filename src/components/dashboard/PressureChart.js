@@ -7,6 +7,7 @@ const PressureChart = () => {
   const [options, setOptions] = useState({
     chart: {
       id: "apexchart-example"
+      
     },
     xaxis: {
       categories: [],
@@ -26,7 +27,6 @@ const PressureChart = () => {
       gradient: {
         shade: 'dark',
         gradientToColors: ['#F50555', '#6078ea', '#6094ea']
-        // gradientToColors: [ '#e63946']
       }
     },
     tooltip: {
@@ -36,7 +36,7 @@ const PressureChart = () => {
 
   const [series, setSeries] = useState([
     {
-      name: 'CurrentVFD',
+      name: 'Host A Phase Current',
       data: [],
     }
   ]);
@@ -44,13 +44,32 @@ const PressureChart = () => {
   const fetchData = () => {
     axios.get("https://raymondbackend.onrender.com/api/mqttpressure")
       .then(response => {
-        const values = response.data;
-        
-        // Divide each value in the array by 10
-        const valuesDividedBy10 = values.map(value => value / 10);
+        const { values, dates } = response.data;
 
-        // Reverse the order of the array
-        const reversedValues = valuesDividedBy10.reverse();
+        // Divide all values by 10
+        const dividedValues = values.map(value => (value / 10).toFixed(1));
+
+        // Reverse the order of the arrays
+        const reversedValues = dividedValues.reverse();
+        const formattedDates = dates.reverse().map(dateString => {
+          const date = new Date(dateString);
+          return date.toLocaleString('en-US', {
+            day: '2-digit',
+            month: '2-digit',
+            year: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
+          });
+        });
+
+        setOptions({
+          ...options,
+          xaxis: {
+            ...options.xaxis,
+            categories: formattedDates,
+          }
+        });
 
         setSeries([
           {
@@ -74,10 +93,11 @@ const PressureChart = () => {
     return () => clearInterval(intervalId);
   }, []);
 
+
   return (
     <Card>
       <CardBody>
-        <CardTitle tag="h5">Air Feed Pressure</CardTitle>
+        <CardTitle tag="h5">Air Feed Pressure Run Chart : For Current Day </CardTitle>
         <Chart
           type="area"
           width="100%"
@@ -89,5 +109,6 @@ const PressureChart = () => {
     </Card>
   );
 };
+
 
 export default PressureChart;
